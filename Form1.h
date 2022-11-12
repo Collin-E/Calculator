@@ -666,7 +666,9 @@ namespace CppCLRWinFormsProject {
 		firstNum = Double::Parse(txtDisplay->Text); // Only take in the first number, no need for a second number.
 		answer = sqrt(firstNum); // Compute the answer
 		txtDisplay->Text = System::Convert::ToString(answer); // Instantly display the answer to the main text box
-		txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
-	} // Display the whole computation in the history text box
+		txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text; // Display the whole computation in the history text box
+		firstNum = answer; // change firstNum to the answer so that the user can chain operations
+		counter = 0; // Reset the counter since we want the following operation to use a new secondNum
+	}
 };
 }
