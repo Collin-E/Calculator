@@ -1,4 +1,11 @@
 ﻿#pragma once
+/* Author: Collin Ennis
+*  Version: 1.0
+*  Release Date: 11/12/2022
+*  Simple calculator app developed in C++
+*
+* Used the C++/CLR Windows Form template.
+*/
 #include <string>
 #include <unordered_map>
 #include <iostream>
@@ -484,11 +491,12 @@ namespace CppCLRWinFormsProject {
 			this->PerformLayout();
 
 		}
-		double firstNum, secondNum, answer, first;
-		int counter = 0;
-		String^ charOP;
-		String^ originalOP;
+		double firstNum, secondNum, answer, first; // first keeps track of the first number, important for operation chaining.
+		int counter = 0; // Counts the number of sequential operations with the same operator. Important for operation chaining.
+		String^ charOP; // Keeps track of which operator was pressed, +, -, /, etc.
+		String^ originalOP; // Keeps track of the last operator. This is important for operation chaining.
 #pragma endregion
+	// Reads in and displays the value of the buttons pressed.
 	private: System::Void NumbersOnly(System::Object^ sender, System::EventArgs^ e) {
 		Button^ numb = safe_cast<Button^>(sender);
 		if (txtDisplay->Text == "0") {
@@ -498,156 +506,167 @@ namespace CppCLRWinFormsProject {
 			txtDisplay->Text = txtDisplay->Text + numb->Text;
 		}
 	}
-private: System::Void arithmeticOP(System::Object^ sender, System::EventArgs^ e) {
-	Button^ aOP = safe_cast<Button^>(sender);
-	firstNum = Double::Parse(txtDisplay->Text);
-	txtDisplay->Text = "";
-	charOP = aOP->Text;
+	// Reads in the operator that was pressed. This will be used once the Equal button is pressed.
+	private: System::Void arithmeticOP(System::Object^ sender, System::EventArgs^ e) {
+		Button^ aOP = safe_cast<Button^>(sender);
+		firstNum = Double::Parse(txtDisplay->Text);
+		txtDisplay->Text = "";
+		charOP = aOP->Text;
 
-}
-private: System::Void btnClear_Click(System::Object^ sender, System::EventArgs^ e) {
-	txtDisplay->Text = "0";
-	charOP = "";
-	counter = 0;
-}
-private: System::Void btnClearAll_Click(System::Object^ sender, System::EventArgs^ e) {
-	txtDisplay->Text = "0";
-	txtDisplay2->Text = "";
-	charOP = "";
-	counter = 0;
-}
-private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (!txtDisplay->Text->Contains(".")) {
-		txtDisplay->Text = txtDisplay->Text + ".";
 	}
-}
-private: System::Void btnBack_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (txtDisplay->Text->Length > 0) {
-		counter = 0;
-		charOP = "";
-	}
-}
-private: System::Void txtDisplay_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (txtDisplay->Text == "") {
+	// For the C button. Resets the main text box, operator, and sequential operation counter
+	private: System::Void btnClear_Click(System::Object^ sender, System::EventArgs^ e) {
 		txtDisplay->Text = "0";
+		charOP = "";
+		counter = 0;
 	}
-}
-private: System::Void btnPlusMinus_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (txtDisplay->Text->Contains("-")) {
-		txtDisplay->Text = txtDisplay->Text->Remove(0, 1);
+	// For the CE button. Resets both the main text box and the history text box, the operator, and sequential operation counter
+	private: System::Void btnClearAll_Click(System::Object^ sender, System::EventArgs^ e) {
+		txtDisplay->Text = "0";
+		txtDisplay2->Text = "";
+		charOP = "";
+		counter = 0;
 	}
-	else {
-		txtDisplay->Text = "-" + txtDisplay->Text;
+	// For adding a decimal point. Will do nothing if the text box already has a decimal point. i.e. can't do 1.5.5
+	private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!txtDisplay->Text->Contains(".")) {
+			txtDisplay->Text = txtDisplay->Text + ".";
+		}
 	}
-}
-private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ e) {
-	first = firstNum;
+	// For the back button. Basically only removes the last used operator and resets the counter. This will just stop the sequential operation chaining
+	private: System::Void btnBack_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (txtDisplay->Text->Length > 0) {
+			counter = 0;
+			charOP = "";
+		}
+	}
+	// Defaults the main text box to 0 when it is empty.
+	private: System::Void txtDisplay_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (txtDisplay->Text == "") {
+			txtDisplay->Text = "0";
+		}
+	}
+	// Alternates the main text box from positive or negative.
+	private: System::Void btnPlusMinus_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (txtDisplay->Text->Contains("-")) {
+			txtDisplay->Text = txtDisplay->Text->Remove(0, 1);
+		}
+		else {
+			txtDisplay->Text = "-" + txtDisplay->Text;
+		}
+	}
+	// Computes the answer, updates the main text box, and displays the computation in the history text box.
+	// Note that each operator behaves differently depending on if counter is 0 or not. If its 0, it will read in the second input from the text box, but
+	// If its not 0, it will use the stored secondNum again. This is crucial for operation chaining. i.e. 2+2=4 + 2 = 6 + 2 = 8 etc.
+	private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ e) {
+		first = firstNum;
 	
-	if (charOP == "+") {
-		if (counter == 0) {
-			secondNum = Double::Parse(txtDisplay->Text);
-			answer = firstNum + secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
-			originalOP = charOP;
-		}
-		else {
-			if (originalOP != charOP) {
+		if (charOP == "+") {
+			if (counter == 0) {
 				secondNum = Double::Parse(txtDisplay->Text);
+				answer = firstNum + secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
 				originalOP = charOP;
 			}
-			answer = firstNum + secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
+			else {
+				if (originalOP != charOP) {
+					secondNum = Double::Parse(txtDisplay->Text);
+					originalOP = charOP;
+				}
+				answer = firstNum + secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
+			}
 		}
-	}
-	else if (charOP == "-") {
-		if (counter == 0) {
-			secondNum = Double::Parse(txtDisplay->Text);
-			answer = firstNum - secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
-			originalOP = charOP;
-		}
-		else {
-			if (originalOP != charOP) {
+		else if (charOP == "-") {
+			if (counter == 0) {
 				secondNum = Double::Parse(txtDisplay->Text);
+				answer = firstNum - secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
 				originalOP = charOP;
 			}
-			answer = firstNum - secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
+			else {
+				if (originalOP != charOP) {
+					secondNum = Double::Parse(txtDisplay->Text);
+					originalOP = charOP;
+				}
+				answer = firstNum - secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
+			}
 		}
-	}
-	else if (charOP == "/") {
-		if (counter == 0) {
-			secondNum = Double::Parse(txtDisplay->Text);
-			answer = firstNum / secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
-			originalOP = charOP;
-		}
-		else {
-			if (originalOP != charOP) {
+		else if (charOP == "/") {
+			if (counter == 0) {
 				secondNum = Double::Parse(txtDisplay->Text);
+				answer = firstNum / secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
 				originalOP = charOP;
 			}
-			answer = firstNum / secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
+			else {
+				if (originalOP != charOP) {
+					secondNum = Double::Parse(txtDisplay->Text);
+					originalOP = charOP;
+				}
+				answer = firstNum / secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
+			}
 		}
-	}
-	else if (charOP == "*") {
-		if (counter == 0) {
-			secondNum = Double::Parse(txtDisplay->Text);
-			answer = firstNum * secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
-			originalOP = charOP;
-		}
-		else {
-			if (originalOP != charOP) {
+		else if (charOP == "*") {
+			if (counter == 0) {
 				secondNum = Double::Parse(txtDisplay->Text);
+				answer = firstNum * secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
 				originalOP = charOP;
 			}
-			answer = firstNum * secondNum;
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
+			else {
+				if (originalOP != charOP) {
+					secondNum = Double::Parse(txtDisplay->Text);
+					originalOP = charOP;
+				}
+				answer = firstNum * secondNum;
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
+			}
 		}
-	}
-	else if (charOP == "^") {
-		if (counter == 0) {
-			secondNum = Double::Parse(txtDisplay->Text);
-			answer = pow(firstNum, secondNum);
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
-			originalOP = charOP;
-		}
-		else {
-			if (originalOP != charOP) {
+		else if (charOP == "^") {
+			if (counter == 0) {
 				secondNum = Double::Parse(txtDisplay->Text);
+				answer = pow(firstNum, secondNum);
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
 				originalOP = charOP;
 			}
-			answer = pow(firstNum, secondNum);
-			txtDisplay->Text = System::Convert::ToString(answer);
-			firstNum = answer;
+			else {
+				if (originalOP != charOP) {
+					secondNum = Double::Parse(txtDisplay->Text);
+					originalOP = charOP;
+				}
+				answer = pow(firstNum, secondNum);
+				txtDisplay->Text = System::Convert::ToString(answer);
+				firstNum = answer;
+			}
 		}
+		if (charOP != "") { // If an operation was done:
+			counter++; // Increment the counter because a sequential operation was computed
+			txtDisplay2->Text = System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
+		} // Display the computation in the history text box
 	}
-	if (charOP != "" && charOP != "sqrt(x)") {
-		counter++;
-		txtDisplay2->Text = System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
+	// This button clears the history text box
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		txtDisplay2->Text = "";
 	}
-}
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	txtDisplay2->Text = "";
-}
-
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-	Button^ aOP = safe_cast<Button^>(sender);
-	firstNum = Double::Parse(txtDisplay->Text);
-	answer = sqrt(firstNum);
-	txtDisplay->Text = System::Convert::ToString(answer);
-	txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
-}
+	// This is the square root button. It is a simplified version of the rest of the operators because it does not require the Equal button to be pressed afterward.
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ aOP = safe_cast<Button^>(sender);
+		firstNum = Double::Parse(txtDisplay->Text); // Only take in the first number, no need for a second number.
+		answer = sqrt(firstNum); // Compute the answer
+		txtDisplay->Text = System::Convert::ToString(answer); // Instantly display the answer to the main text box
+		txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
+	} // Display the whole computation in the history text box
 };
 }
