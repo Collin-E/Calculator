@@ -465,11 +465,13 @@ private: System::Void ArithmeticOP(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void btnClear_Click(System::Object^ sender, System::EventArgs^ e) {
 	txtDisplay->Text = "0";
+	charOP = "";
 	counter = 0;
 }
 private: System::Void btnClearAll_Click(System::Object^ sender, System::EventArgs^ e) {
 	txtDisplay->Text = "0";
 	txtDisplay2->Text = "";
+	charOP = "";
 	counter = 0;
 }
 private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -479,7 +481,9 @@ private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs
 }
 private: System::Void btnBack_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (txtDisplay->Text->Length > 0) {
-		txtDisplay->Text = txtDisplay->Text->Remove(txtDisplay->Text->Length-1, 1);
+		//txtDisplay->Text = txtDisplay->Text->Remove(txtDisplay->Text->Length-1, 1);
+		counter = 0;
+		charOP = "";
 	}
 }
 private: System::Void txtDisplay_TextChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -501,6 +505,19 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 	//}
 	first = firstNum;
 	if (charOP == "+") {
+		if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = firstNum + secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
+		else {
+			answer = firstNum + secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
 		//secondNum = Double::Parse(txtDisplay->Text);
 		//answer = firstNum + secondNum;
 		//txtDisplay->Text = System::Convert::ToString(answer);
@@ -528,32 +545,73 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			answer = firstNum - secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
-			counter++;
+			//counter++;
 		}
 		else {
 			answer = firstNum - secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
-			counter++;
+			//counter++;
 		}
 		//secondNum = Double::Parse(txtDisplay->Text);
 		//answer = firstNum - secondNum;
 		//txtDisplay->Text = System::Convert::ToString(answer);
 	}
 	else if (charOP == "/") {
-		answer = firstNum / secondNum;
-		txtDisplay->Text = System::Convert::ToString(answer);
+		//answer = firstNum / secondNum;
+		//txtDisplay->Text = System::Convert::ToString(answer);
+		if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = firstNum / secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
+		else {
+			answer = firstNum / secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
 	}
 	else if (charOP == "*") {
-		answer = firstNum * secondNum;
-		txtDisplay->Text = System::Convert::ToString(answer);
+		//answer = firstNum * secondNum;
+		//txtDisplay->Text = System::Convert::ToString(answer);
+		if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = firstNum * secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
+		else {
+			answer = firstNum * secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
 	}
 	else if (charOP == "^") {
-		answer = pow(firstNum, secondNum);
-		txtDisplay->Text = System::Convert::ToString(answer);
+		//answer = pow(firstNum, secondNum);
+		//txtDisplay->Text = System::Convert::ToString(answer);
+		if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = pow(firstNum, secondNum);
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
+		else {
+			answer = pow(firstNum, secondNum);
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			//counter++;
+		}
 	}
-	counter++;
-	txtDisplay2->Text += System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n";
+	if (charOP != "") {
+		counter++;
+		txtDisplay2->Text += System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n";
+	}
 	//secondNum = firstNum;
 	//firstNum = answer;
 	
