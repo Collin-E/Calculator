@@ -136,6 +136,7 @@ namespace CppCLRWinFormsProject {
 			this->btnBack->TabIndex = 0;
 			this->btnBack->Text = L"Õ\r\n";
 			this->btnBack->UseVisualStyleBackColor = true;
+			this->btnBack->Click += gcnew System::EventHandler(this, &Form1::btnBack_Click);
 			// 
 			// txtDisplay
 			// 
@@ -148,6 +149,7 @@ namespace CppCLRWinFormsProject {
 			this->txtDisplay->TabIndex = 1;
 			this->txtDisplay->Text = L"0";
 			this->txtDisplay->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->txtDisplay->TextChanged += gcnew System::EventHandler(this, &Form1::txtDisplay_TextChanged);
 			// 
 			// btnClear
 			// 
@@ -159,6 +161,7 @@ namespace CppCLRWinFormsProject {
 			this->btnClear->TabIndex = 2;
 			this->btnClear->Text = L"C";
 			this->btnClear->UseVisualStyleBackColor = true;
+			this->btnClear->Click += gcnew System::EventHandler(this, &Form1::btnClear_Click);
 			// 
 			// btnClearAll
 			// 
@@ -171,6 +174,7 @@ namespace CppCLRWinFormsProject {
 			this->btnClearAll->TabIndex = 3;
 			this->btnClearAll->Text = L"CE";
 			this->btnClearAll->UseVisualStyleBackColor = true;
+			this->btnClearAll->Click += gcnew System::EventHandler(this, &Form1::btnClearAll_Click);
 			// 
 			// btnPlusMinus
 			// 
@@ -182,6 +186,7 @@ namespace CppCLRWinFormsProject {
 			this->btnPlusMinus->TabIndex = 4;
 			this->btnPlusMinus->Text = L"±";
 			this->btnPlusMinus->UseVisualStyleBackColor = true;
+			this->btnPlusMinus->Click += gcnew System::EventHandler(this, &Form1::btnPlusMinus_Click);
 			// 
 			// btn7
 			// 
@@ -350,6 +355,7 @@ namespace CppCLRWinFormsProject {
 			this->btnDecimal->TabIndex = 30;
 			this->btnDecimal->Text = L".";
 			this->btnDecimal->UseVisualStyleBackColor = true;
+			this->btnDecimal->Click += gcnew System::EventHandler(this, &Form1::btnDecimal_Click);
 			// 
 			// btnEqual
 			// 
@@ -361,6 +367,7 @@ namespace CppCLRWinFormsProject {
 			this->btnEqual->TabIndex = 32;
 			this->btnEqual->Text = L"=";
 			this->btnEqual->UseVisualStyleBackColor = true;
+			this->btnEqual->Click += gcnew System::EventHandler(this, &Form1::btnEqual_Click);
 			// 
 			// btnDiv
 			// 
@@ -425,6 +432,54 @@ private: System::Void ArithmeticOP(System::Object^ sender, System::EventArgs^ e)
 	txtDisplay->Text = "";
 	charOP = aOP->Text;
 
+}
+private: System::Void btnClear_Click(System::Object^ sender, System::EventArgs^ e) {
+	txtDisplay->Text = "0";
+}
+private: System::Void btnClearAll_Click(System::Object^ sender, System::EventArgs^ e) {
+	txtDisplay->Text = "0";
+}
+private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (!txtDisplay->Text->Contains(".")) {
+		txtDisplay->Text = txtDisplay->Text + ".";
+	}
+}
+private: System::Void btnBack_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (txtDisplay->Text->Length > 0) {
+		txtDisplay->Text = txtDisplay->Text->Remove(txtDisplay->Text->Length-1, 1);
+	}
+}
+private: System::Void txtDisplay_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	if (txtDisplay->Text == "") {
+		txtDisplay->Text = "0";
+	}
+}
+private: System::Void btnPlusMinus_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (txtDisplay->Text->Contains("-")) {
+		txtDisplay->Text = txtDisplay->Text->Remove(0, 1);
+	}
+	else {
+		txtDisplay->Text = "-" + txtDisplay->Text;
+	}
+}
+private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ e) {
+	secondNum = Double::Parse(txtDisplay->Text);
+	if (charOP == "+") {
+		answer = firstNum + secondNum;
+		txtDisplay->Text = System::Convert::ToString(answer);
+	}
+	else if (charOP == "-") {
+		answer = firstNum - secondNum;
+		txtDisplay->Text = System::Convert::ToString(answer);
+	}
+	else if (charOP == "/") {
+		answer = firstNum / secondNum;
+		txtDisplay->Text = System::Convert::ToString(answer);
+	}
+	else if (charOP == "*") {
+		answer = firstNum * secondNum;
+		txtDisplay->Text = System::Convert::ToString(answer);
+	}
 }
 };
 }
