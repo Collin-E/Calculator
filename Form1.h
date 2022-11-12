@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 namespace CppCLRWinFormsProject {
 
@@ -90,6 +90,8 @@ namespace CppCLRWinFormsProject {
 	private: System::Windows::Forms::Button^ btnDiv;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::TextBox^ txtDisplay2;
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button3;
 
 
 
@@ -129,6 +131,8 @@ namespace CppCLRWinFormsProject {
 			this->btnDiv = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->txtDisplay2 = (gcnew System::Windows::Forms::TextBox());
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// btnBack
@@ -139,7 +143,7 @@ namespace CppCLRWinFormsProject {
 			this->btnBack->Name = L"btnBack";
 			this->btnBack->Size = System::Drawing::Size(132, 54);
 			this->btnBack->TabIndex = 0;
-			this->btnBack->Text = L"Õ\r\n";
+			this->btnBack->Text = L"Ã•\r\n";
 			this->btnBack->UseVisualStyleBackColor = true;
 			this->btnBack->Click += gcnew System::EventHandler(this, &Form1::btnBack_Click);
 			// 
@@ -189,7 +193,7 @@ namespace CppCLRWinFormsProject {
 			this->btnPlusMinus->Name = L"btnPlusMinus";
 			this->btnPlusMinus->Size = System::Drawing::Size(132, 54);
 			this->btnPlusMinus->TabIndex = 4;
-			this->btnPlusMinus->Text = L"±";
+			this->btnPlusMinus->Text = L"Â±";
 			this->btnPlusMinus->UseVisualStyleBackColor = true;
 			this->btnPlusMinus->Click += gcnew System::EventHandler(this, &Form1::btnPlusMinus_Click);
 			// 
@@ -239,7 +243,7 @@ namespace CppCLRWinFormsProject {
 			this->btnAdd->TabIndex = 9;
 			this->btnAdd->Text = L"+";
 			this->btnAdd->UseVisualStyleBackColor = true;
-			this->btnAdd->Click += gcnew System::EventHandler(this, &Form1::ArithmeticOP);
+			this->btnAdd->Click += gcnew System::EventHandler(this, &Form1::arithmeticOP);
 			// 
 			// btn1
 			// 
@@ -336,7 +340,7 @@ namespace CppCLRWinFormsProject {
 			this->btnMult->TabIndex = 21;
 			this->btnMult->Text = L"*";
 			this->btnMult->UseVisualStyleBackColor = true;
-			this->btnMult->Click += gcnew System::EventHandler(this, &Form1::ArithmeticOP);
+			this->btnMult->Click += gcnew System::EventHandler(this, &Form1::arithmeticOP);
 			// 
 			// btnSub
 			// 
@@ -348,7 +352,7 @@ namespace CppCLRWinFormsProject {
 			this->btnSub->TabIndex = 20;
 			this->btnSub->Text = L"-";
 			this->btnSub->UseVisualStyleBackColor = true;
-			this->btnSub->Click += gcnew System::EventHandler(this, &Form1::ArithmeticOP);
+			this->btnSub->Click += gcnew System::EventHandler(this, &Form1::arithmeticOP);
 			// 
 			// btnDecimal
 			// 
@@ -384,7 +388,7 @@ namespace CppCLRWinFormsProject {
 			this->btnDiv->TabIndex = 34;
 			this->btnDiv->Text = L"/";
 			this->btnDiv->UseVisualStyleBackColor = true;
-			this->btnDiv->Click += gcnew System::EventHandler(this, &Form1::ArithmeticOP);
+			this->btnDiv->Click += gcnew System::EventHandler(this, &Form1::arithmeticOP);
 			// 
 			// button1
 			// 
@@ -396,23 +400,58 @@ namespace CppCLRWinFormsProject {
 			this->button1->TabIndex = 35;
 			this->button1->Text = L"^";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Form1::btnExponent);
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::arithmeticOP);
 			// 
 			// txtDisplay2
 			// 
 			this->txtDisplay2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->txtDisplay2->Location = System::Drawing::Point(604, 12);
+			this->txtDisplay2->Margin = System::Windows::Forms::Padding(3, 3, 3, 0);
 			this->txtDisplay2->Multiline = true;
 			this->txtDisplay2->Name = L"txtDisplay2";
-			this->txtDisplay2->Size = System::Drawing::Size(267, 476);
+			this->txtDisplay2->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
+			this->txtDisplay2->Size = System::Drawing::Size(267, 447);
 			this->txtDisplay2->TabIndex = 36;
+			// 
+			// button2
+			// 
+			this->button2->BackColor = System::Drawing::SystemColors::ButtonFace;
+			this->button2->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->button2->FlatAppearance->BorderColor = System::Drawing::Color::Red;
+			this->button2->FlatAppearance->BorderSize = 50;
+			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			this->button2->Font = (gcnew System::Drawing::Font(L"Wingdings 2", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(2)));
+			this->button2->Location = System::Drawing::Point(823, 460);
+			this->button2->Margin = System::Windows::Forms::Padding(0);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(48, 38);
+			this->button2->TabIndex = 37;
+			this->button2->Text = L"3\r\n\r\n";
+			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button2->UseVisualStyleBackColor = false;
+			this->button2->Click += gcnew System::EventHandler(this, &Form1::button2_Click);
+			// 
+			// button3
+			// 
+			this->button3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button3->Location = System::Drawing::Point(167, 434);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(132, 54);
+			this->button3->TabIndex = 38;
+			this->button3->Text = L"sqrt(x)";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &Form1::button3_Click);
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(883, 507);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->txtDisplay2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnDiv);
@@ -457,7 +496,7 @@ namespace CppCLRWinFormsProject {
 			txtDisplay->Text = txtDisplay->Text + numb->Text;
 		}
 	}
-private: System::Void ArithmeticOP(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void arithmeticOP(System::Object^ sender, System::EventArgs^ e) {
 	Button^ aOP = safe_cast<Button^>(sender);
 	firstNum = Double::Parse(txtDisplay->Text);
 	txtDisplay->Text = "";
@@ -640,22 +679,52 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			//counter++;
 		}
 	}
-	if (charOP != "") {
+	/*else if (charOP == "sqrt(x)") {
+		//answer = pow(firstNum, secondNum);
+		//txtDisplay->Text = System::Convert::ToString(answer);
+		//txtDisplay->Text = "hello";
+		if (counter == 0) {
+			//secondNum = Double::Parse(txtDisplay->Text);
+			answer = sqrt(firstNum);
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			originalOP = charOP;
+			//counter++;
+		}
+		else {
+			if (originalOP != charOP) {
+				//secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
+			answer = sqrt(firstNum);
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+
+			//counter++;
+		}
+		txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n";
 		counter++;
-		txtDisplay2->Text += System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n";
+	}*/
+	if (charOP != "" && charOP != "sqrt(x)") {
+		counter++;
+		txtDisplay2->Text = System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
 	}
 	//secondNum = firstNum;
 	//firstNum = answer;
 	
 }
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	txtDisplay2->Text = "";
+}
 
-private: System::Void btnExponent(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
 	Button^ aOP = safe_cast<Button^>(sender);
 	firstNum = Double::Parse(txtDisplay->Text);
-	txtDisplay->Text = "";
-	charOP = aOP->Text;
-}
-private: System::Void txtDisplay2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	answer = sqrt(firstNum);
+	txtDisplay->Text = System::Convert::ToString(answer);
+	txtDisplay2->Text = "sqrt(" + System::Convert::ToString(firstNum) + ") = " + System::Convert::ToString(answer) + "\r\n" + txtDisplay2->Text;
+	//charOP = aOP->Text;
 }
 };
 }
