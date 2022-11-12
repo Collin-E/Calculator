@@ -445,6 +445,7 @@ namespace CppCLRWinFormsProject {
 		double firstNum, secondNum, answer, first;
 		int counter = 0;
 		String^ charOP;
+		String^ originalOP;
 
 #pragma endregion
 	private: System::Void NumbersOnly(System::Object^ sender, System::EventArgs^ e) {
@@ -504,15 +505,22 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 	//	secondNum = Double::Parse(txtDisplay->Text);
 	//}
 	first = firstNum;
+	
 	if (charOP == "+") {
 		if (counter == 0) {
 			secondNum = Double::Parse(txtDisplay->Text);
 			answer = firstNum + secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
+			originalOP = charOP;
 			//counter++;
 		}
 		else {
+			if (originalOP != charOP) {
+				secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
 			answer = firstNum + secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
@@ -545,9 +553,15 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			answer = firstNum - secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
+			originalOP = charOP;
 			//counter++;
 		}
 		else {
+			if (originalOP != charOP) {
+				secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
 			answer = firstNum - secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
@@ -565,9 +579,15 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			answer = firstNum / secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
+			originalOP = charOP;
 			//counter++;
 		}
 		else {
+			if (originalOP != charOP) {
+				secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
 			answer = firstNum / secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
@@ -582,9 +602,15 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			answer = firstNum * secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
+			originalOP = charOP;
 			//counter++;
 		}
 		else {
+			if (originalOP != charOP) {
+				secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
 			answer = firstNum * secondNum;
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
@@ -599,9 +625,15 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 			answer = pow(firstNum, secondNum);
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
+			originalOP = charOP;
 			//counter++;
 		}
 		else {
+			if (originalOP != charOP) {
+				secondNum = Double::Parse(txtDisplay->Text);
+				originalOP = charOP;
+				//counter = 0;
+			}
 			answer = pow(firstNum, secondNum);
 			txtDisplay->Text = System::Convert::ToString(answer);
 			firstNum = answer;
