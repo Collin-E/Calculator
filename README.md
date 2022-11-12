@@ -1,6 +1,6 @@
 # Calculator
 Simple C++ Calculator App for Windows
-![image](https://user-images.githubusercontent.com/115193664/201498394-c8116aff-8f0e-4d9f-9705-9a7f46ea95f0.png)
+![image](https://user-images.githubusercontent.com/115193664/201498535-92cc2105-2c95-4b42-914d-1ec2b2c49bf9.png)
 
 Developed using the C++/CLR Windows Form template for Visual Studio.
 
