@@ -88,6 +88,9 @@ namespace CppCLRWinFormsProject {
 
 
 	private: System::Windows::Forms::Button^ btnDiv;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::TextBox^ txtDisplay2;
+
 
 
 	private:
@@ -124,6 +127,8 @@ namespace CppCLRWinFormsProject {
 			this->btnDecimal = (gcnew System::Windows::Forms::Button());
 			this->btnEqual = (gcnew System::Windows::Forms::Button());
 			this->btnDiv = (gcnew System::Windows::Forms::Button());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->txtDisplay2 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// btnBack
@@ -381,11 +386,35 @@ namespace CppCLRWinFormsProject {
 			this->btnDiv->UseVisualStyleBackColor = true;
 			this->btnDiv->Click += gcnew System::EventHandler(this, &Form1::ArithmeticOP);
 			// 
+			// button1
+			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->Location = System::Drawing::Point(20, 434);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(132, 54);
+			this->button1->TabIndex = 35;
+			this->button1->Text = L"^";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Form1::btnExponent);
+			// 
+			// txtDisplay2
+			// 
+			this->txtDisplay2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->txtDisplay2->Location = System::Drawing::Point(604, 12);
+			this->txtDisplay2->Multiline = true;
+			this->txtDisplay2->Name = L"txtDisplay2";
+			this->txtDisplay2->Size = System::Drawing::Size(267, 476);
+			this->txtDisplay2->TabIndex = 36;
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(620, 450);
+			this->ClientSize = System::Drawing::Size(883, 507);
+			this->Controls->Add(this->txtDisplay2);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnDiv);
 			this->Controls->Add(this->btnEqual);
 			this->Controls->Add(this->btnDecimal);
@@ -413,7 +442,8 @@ namespace CppCLRWinFormsProject {
 			this->PerformLayout();
 
 		}
-		double firstNum, secondNum, answer;
+		double firstNum, secondNum, answer, first;
+		int counter = 0;
 		String^ charOP;
 
 #pragma endregion
@@ -435,9 +465,12 @@ private: System::Void ArithmeticOP(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void btnClear_Click(System::Object^ sender, System::EventArgs^ e) {
 	txtDisplay->Text = "0";
+	counter = 0;
 }
 private: System::Void btnClearAll_Click(System::Object^ sender, System::EventArgs^ e) {
 	txtDisplay->Text = "0";
+	txtDisplay2->Text = "";
+	counter = 0;
 }
 private: System::Void btnDecimal_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (!txtDisplay->Text->Contains(".")) {
@@ -463,14 +496,49 @@ private: System::Void btnPlusMinus_Click(System::Object^ sender, System::EventAr
 	}
 }
 private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ e) {
-	secondNum = Double::Parse(txtDisplay->Text);
+	//if (counter = 0) {
+	//	secondNum = Double::Parse(txtDisplay->Text);
+	//}
+	first = firstNum;
 	if (charOP == "+") {
-		answer = firstNum + secondNum;
-		txtDisplay->Text = System::Convert::ToString(answer);
+		//secondNum = Double::Parse(txtDisplay->Text);
+		//answer = firstNum + secondNum;
+		//txtDisplay->Text = System::Convert::ToString(answer);
+		//secondNum = firstNum;
+		//firstNum = answer;
+		
+		/*if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = firstNum + secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			counter++;
+		}
+		else {
+			answer = firstNum + secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			counter++;
+		}*/
+
 	}
 	else if (charOP == "-") {
-		answer = firstNum - secondNum;
-		txtDisplay->Text = System::Convert::ToString(answer);
+		if (counter == 0) {
+			secondNum = Double::Parse(txtDisplay->Text);
+			answer = firstNum - secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			counter++;
+		}
+		else {
+			answer = firstNum - secondNum;
+			txtDisplay->Text = System::Convert::ToString(answer);
+			firstNum = answer;
+			counter++;
+		}
+		//secondNum = Double::Parse(txtDisplay->Text);
+		//answer = firstNum - secondNum;
+		//txtDisplay->Text = System::Convert::ToString(answer);
 	}
 	else if (charOP == "/") {
 		answer = firstNum / secondNum;
@@ -480,6 +548,24 @@ private: System::Void btnEqual_Click(System::Object^ sender, System::EventArgs^ 
 		answer = firstNum * secondNum;
 		txtDisplay->Text = System::Convert::ToString(answer);
 	}
+	else if (charOP == "^") {
+		answer = pow(firstNum, secondNum);
+		txtDisplay->Text = System::Convert::ToString(answer);
+	}
+	counter++;
+	txtDisplay2->Text += System::Convert::ToString(first) + " " + System::Convert::ToString(charOP) + " " + System::Convert::ToString(secondNum) + " = " + System::Convert::ToString(answer) + "\r\n";
+	//secondNum = firstNum;
+	//firstNum = answer;
+	
+}
+
+private: System::Void btnExponent(System::Object^ sender, System::EventArgs^ e) {
+	Button^ aOP = safe_cast<Button^>(sender);
+	firstNum = Double::Parse(txtDisplay->Text);
+	txtDisplay->Text = "";
+	charOP = aOP->Text;
+}
+private: System::Void txtDisplay2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
